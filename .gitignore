@@ -1,3 +1,20 @@
+# Mercurial files
+.hg*
+!Test_Set_10_OSP_Paper/*
+Test_Set_01*/
+Test_Set_02*/
+Test_Set_03*/
+Test_Set_04*/
+Test_Set_05*/
+Test_Set_06*/
+Test_Set_07*/
+Test_Set_08*/
+Test_Set_09*/
+Test_Set_11*/
+make*
+run*
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

@@ -1,0 +1,2 @@
+../../../../DATA_CENTER/DUCK_data/ducknsol_xyz.dat
+../../../../DATA_CENTER/DUCK_data/duckosol_xyz.dat

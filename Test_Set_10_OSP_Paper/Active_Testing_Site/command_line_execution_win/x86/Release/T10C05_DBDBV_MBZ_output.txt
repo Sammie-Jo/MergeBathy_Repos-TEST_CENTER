@@ -1,0 +1,58 @@
+
+Initializing .... BUILD 5.0.2: July 23, 2015
+
+Using the hann Weighting Window
+Using Reference Longitude: -129
+Using Reference Latitude: 49.5
+Using X Grid Spacing (meters): 926
+Using Y Grid Spacing (meters): 926
+Using X Smoothing Scale (meters): 1234.67
+Using Y Smoothing Scale (meters): 1234.67
+Using ZGrid in Interpolation
+Using 8 Cores in Interpolation
+Do not NaN depths in the end. No bad points!
+Using MSE (linear) Estimator.
+Performing Single Interpolation
+
+Number of Input Files to Read: 2
+Reading Input File: ../../../../DATA_CENTER/DBDBV_data/DBDBV_test_0.5data_xyde.txt ...... 87001 Records Read Successfully.
+	Using Multiplier: 1
+Reading Input File: ../../../../DATA_CENTER/DBDBV_data/DBDBV_test_2.0data_No0.5overlap_xyde.txt ...... 5460 Records Read Successfully.
+	Using Multiplier: 1
+Done Reading Input Files
+
+Input Data UTM Zone: 9U
+Dimensions of Computational Area: 
+	Rows: 365
+	Cols: 325
+
+********************************************************
+* Computing MB_ZGrid
+********************************************************
+Number of computed rows: 544
+Number of computed cols: 484
+Time to Complete MB_ZGrid Interpolation: 0.109
+
+Time to Complete MB_ZGrid Interpolation with Errors: 10.462
+
+Done Computing MB_ZGrid
+
+Subsampling Data: ........... Done Subsampling Data
+Transforming Data: ........ Done Transforming Data
+
+Number of computed tiles = 324, expected efficiency = 0.005795
+
+
+ENTERING INTERPOLATION ROUTINE:
+Interpolated 9180 points per second (tiled).
+Store Output
+DONE SCALECINTERPTILEDATA
+
+Interpolation Complete!
+Time to Complete Interpolation: 12.921 seconds
+
+Nothing is bad!
+Writing Output Data to: ..\output_files\T10C05_CPP_DBDBV_0.5_NoOverlapMBZ.txt
+Done Creating Output File
+
+Total Computation Time: 40.931 seconds
