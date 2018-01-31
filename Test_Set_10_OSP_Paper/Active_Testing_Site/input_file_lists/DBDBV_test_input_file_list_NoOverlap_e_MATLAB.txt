@@ -1,0 +1,5 @@
+# DBDBV, centerpoint 49.5, -129
+# OSU coordinate system transform:  49.5, -129, 0
+!49.5 -129 0 ..\T06C03_MATLAB_TestOutputDBDBV_0.5_NoOverlap_926x926m_e_F mgrid 926 nooffset formatdir \formatdir msmooth 926 926 modelflag noheadingout plotpts errplots smoothplots saveplots
+../../DATA_CENTER/DBDBV_data/DBDBV_test_0.5data_xyde.txt
+../../DATA_CENTER/DBDBV_data/DBDBV_test_2.0data_No0.5overlap_xyde.txt

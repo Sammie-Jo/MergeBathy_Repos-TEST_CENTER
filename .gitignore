@@ -64,3 +64,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /Test_Set_10_OSP_Paper/Active_Testing_Site/createBathyCppFigs - Copy.m
+/Test_Set_10_OSP_Paper/Active_Testing_Site/output_files
+/Test_Set_10_OSP_Paper/Active_Testing_Site/command_line_execution
+/Test_Set_10_OSP_Paper/Active_Testing_Site/bat_file/runInterpTests.bat
+/Test_Set_10_OSP_Paper/Active_Testing_Site/bash_file/runInterpTests.sh

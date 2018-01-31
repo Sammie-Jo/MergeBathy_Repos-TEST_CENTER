@@ -1,0 +1,5 @@
+# NCEX, centerpoint 32.86649436, -117.2540396
+# OSU coordinate system transform:  36.177602, -75.749690, 18.20
+!36.177602 -75.749690 18.20 ..\T01C02_MATLAB_TestOutputDuck_10x10m_hv mgrid 10 nooffset saveplots errplots formatdir \formatdir modelflag
+../../DATA_CENTER/DUCK_data/ducknsol_xyz.dat
+../../DATA_CENTER/DUCK_data/duckosol_xyz.dat

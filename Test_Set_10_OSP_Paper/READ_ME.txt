@@ -11,4 +11,5 @@ use the createBathyCppFigs.m to make figures of output.
 (2) 10 x 10 meter grid with 10 x 10 meter Hann smoothing window
 (3) 10 x 10 meter grid with 20 x 20 meter Hann smoothing window
 (4) 10 x 10 meter grid with 20 x 100 meter Hann smoothing window
-(5) DBDBV 926 x 926 meter grid with 1234.67 x 1234.67 meter Hann smoothing window and pre-splined with 617.33 x 617.33 meter MB-System zgrid
+(5) 10 x 10 meter grid with 20 x 100 meter Hann smoothing window with 10 x 10 meter GMT SIT pre-splined
+(6) DBDBV 926 x 926 meter grid with 1234.67 x 1234.67 meter Hann smoothing window and pre-splined with 617.33 x 617.33 meter MB-System zgrid

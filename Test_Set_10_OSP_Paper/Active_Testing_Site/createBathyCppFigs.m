@@ -1,60 +1,52 @@
 %Create Figs
-function createBathyCppFigs 
-
-
-% hold on;
-% axis image
-% [cmin, cmax]=caxis;
-% NCEX
-%  caxis([-700,0]);
-%  caxis([-50,50]);
-
-%  hold on;
-%  [cmin, cmax]=caxis;
-%  caxis([cmin/10,cmax/10]);
-
-% DBDBV
-%  caxis([-3000,0]);
-%  caxis([-50,50]);
-
-
-
+% function createBathyCppFigs 
+clear;
 %%
 % data.utmzone = {'999'};
 transpose = 0;
 HEADER = 1;
 MATLAB_FORMAT = 0;
-gxs = [50 10 10 10]; %grid size x
-gys = [50 10 10 10]; %grid size y
-lxs = [50 10 20 20]; %smoothing x
-lys = [50 10 20 100]; %smoothing y
-LL = 0;
+gxs = [50 10 10 10 10  10 617.33	926		 926]; %grid size x
+gys = [50 10 10 10 10  10 617.33	926		 926]; %grid size y
+lxs = [50 10 20 20  0  20	   0	1234.67	 1234.67]; %smoothing x
+lys = [50 10 20 100 0 100	   0	1234.67	 1234.67]; %smoothing y
+LL = 0; % must run MergeBathy with -inputInMeters to get output in meters
 filtername = 'hann'; %'boxcar' 'quadloess' 'loess';
 errplots = 1; 
 smoothplots = 0; 
-plotpts = 1; 
+plot_input = 1; 
+plotpts = 0;
 scale = 1;	% contours in meters
 rect_ll = 0;
 local = 0;
-useutm = 1;
-if LL
-	useutm = 0
-end
+useutm = 0;
+%  if cntM == 1
+% 	 ref_lon = -75.749690; ref_lat = 36.177602; rotation_angle = 18.20;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
+%  elseif cntM == 2
+% 	ref_lon = -129; ref_lat = 46.5; rotation_angle = 0;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
+%  end
+% % Determine whether or not to use UTM grid zones
+% if (clat == 0 & clon == 0 & rot_angle == 0 & ~rect_ll)
+%     useutm = 1;
+% end
 saveplots = 1;
 calcgrid = 1;
 nethresh = 0.75;
 allownegativedepth = 0; 
 modelflag = 1; 
 itersmooth = 0; %ALWAYS itersmooth = 0! because CPP doesnt do this
-% Directory for Test Set to run
-% TestSetRoot='Test_Set_01_runValidationData_Kevins/Active_Testing_Site/';
 
 % Directory for output files from MergeBathy to plot
 outputDir = 'output_files/';
-bitFlag   = 'x86/';
-% bitFlag = 'x64/';
-configFlag   = 'Debug';
-% configFlag = 'Release';
+% bitFlag   = 'x86/';
+bitFlag = 'x64/';
+% configFlag   = 'Debug';
+configFlag = 'Release';
+if LL
+	ext = '_e'; %'' %
+else
+	ext = '_e_meters'; 
+end
 
 %%
 loc = [[outputDir bitFlag] configFlag];
@@ -64,48 +56,280 @@ figDir = 'figs';
 loc = [loc '/'];
 figDir = [figDir '/'];
 
-fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
-	'T10C02_CPP_DUCK_10x10g_10x10s.txt',...
-	'T10C03_CPP_DUCK_10x10g_20x20s.txt',...
-	'T10C04_CPP_DUCK_10x10g_20x100s.txt');
+fList= char(['T10C01_CPP_DUCK_50x50g_50x50s' ext '.txt'],...
+	['T10C02_CPP_DUCK_10x10g_10x10s' ext '.txt'],...
+	['T10C03_CPP_DUCK_10x10g_20x20s' ext '.txt'],...
+	['T10C04_CPP_DUCK_10x10g_20x100s' ext '.txt'],...
+	['T10C05_CPP_DUCK_10x10g_20x100s_10x10GMT' ext '_xyze.txt'],...
+	['T10C05_CPP_DUCK_10x10g_20x100s_10x10GMT' ext '.txt'],...
+	['T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ' ext '_xyde.txt'],...
+	['T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ' ext '.txt'],...
+	['T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK' ext '.txt']);
 
- bathyTitles = char('Duck 50x50m Grid with 50x50m Hann smoothing Bathymetry',...
-	'Duck 10x10m Grid with 10x10m Hann smoothing Bathymetry',...
-	'Duck 10x10m Grid with 20x20m Hann smoothing Bathymetry',...
-	'Duck 10x10m Grid with 20x100m Hann smoothing Bathymetry');
- 
- uncertTitles = char('Duck 50x50m Grid with 50x50m Hann smoothing Uncertainty',...
-	'Duck 10x10m Grid with 10x10m Hann smoothing Uncertainty',...
-	'Duck 10x10m Grid with 20x20m Hann smoothing Uncertainty',...
-	'Duck 10x10m Grid with 20x100m Hann smoothing Uncertainty');
- 
-  bathyFigs = char('T10C01_Duck_50x50g_50x50s_Bathy',...
-	'T10C02_Duck_10x10g_10x10s_Bathy',... 
-	'T10C03_Duck_10x10g_20x20s_Bathy',...
-	'T10C04_Duck_10x10g_20x100s_Bathy');
- 
- uncertFigs = char('T10C01_Duck_50x50g_50x50s_Uncert',...
-	'T10C02_Duck_10x10g_10x10s_Uncert',... 
-	'T10C03_Duck_10x10g_20x20s_Uncert',...
-	'T10C04_Duck_10x10g_20x100s_Uncert');
- figs = char('T10C01_Duck_50x50g_50x50s',...
-	'T10C02_Duck_10x10g_10x10s',... 
-	'T10C03_Duck_10x10g_20x20s',...
-	'T10C04_Duck_10x10g_20x100s');
- [r,c] = size(fList);
- for cnt=1:r
+ figs = char(['T10C01_Duck_50x50g_50x50s' ext],...
+	['T10C02_Duck_10x10g_10x10s' ext],... 
+	['T10C03_Duck_10x10g_20x20s' ext],...
+	['T10C04_Duck_10x10g_20x100s' ext],...
+	['T10C05_Duck_10x10g_20x100s_10x10GMT' ext '_xyze'],...
+	['T10C05_Duck_10x10g_20x100s_10x10GMT' ext],...
+	['T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ' ext '_xyde'],...
+	['T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ' ext],...
+	['T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK' ext]);
+%%
+inA = [];
+if LL
+	insA = {'../../../DATA_CENTER/DUCK_data/ducknsol_xyze.dat',...
+			'../../../DATA_CENTER\DUCK_data/duckosol_xyze.dat'};
+	insB = {'../../../DATA_CENTER/DBDBV_data/DBDBV_test_0.5data_xyde.txt',...
+			'../../../DATA_CENTER/DBDBV_data/DBDBV_test_2.0data_No0.5overlap_xyde.txt'};
+else
+	insA = {'../../../DATA_CENTER/DUCK_data/ducknsolm_xyze.dat',...
+			'../../../DATA_CENTER\DUCK_data/duckosolm_xyze.dat'};
+	insB = {'../../../DATA_CENTER/DBDBV_data/DBDBV_test_0.5datam_xyde.txt',...
+			'../../../DATA_CENTER/DBDBV_data/DBDBV_test_2.0data_No0.5overlapm_xyde.txt'};
+end
+insTemp = insA;
+ext0 = 'duck';
+for cntM=1:2
+	for cnt=1:numel(insTemp)
+		fileID = fopen(insTemp{cnt},'r');		
+		sizeA = [4 Inf];
+		[A count] = fscanf(fileID,'%f %f %f %f\n',sizeA);	
+		inA = A';
+	end
+
+	clear A
+	indata.lon = inA(:,1);
+	indata.lat = inA(:,2);
+
+	indata.z = inA(:,3);
+	indata.e = inA(:,4);
+
+	 if cntM == 1
+		 ref_lon = -75.749690; ref_lat = 36.177602; rotation_angle = 18.20;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
+	 elseif cntM == 2
+		ref_lon = -129; ref_lat = 46.5; rotation_angle = 0;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
+	 end
+	% Determine whether or not to use UTM grid zones
+	if (clat == 0 & clon == 0 & rot_angle == 0 & ~rect_ll)
+		useutm = 1;
+	end
+	if LL
+		[indata.x,indata.y,indata.utmzone] = latlon2csas(inA(:,2),inA(:,1),ref_lat,ref_lon,rotation_angle);
+
+		lons = cat(1,indata.lon);
+		if(((min(lons) < 0 & max(lons) > 0) & (0-min(lons) > 180+min(lons))))
+			if(clon < 0)
+				clon = clon + 360;
+			end
+			for i = 1:length(indata)
+				disp('Datasets straddle anti meridian.  Change lons to 0-360.');
+				id = find(indata(i).lon < 0);
+				indata(i).lon(id) = indata(i).lon(id) + 360;
+				[indata(i).x,indata(i).y,indata(i).utmzone] = latlon2csas(indata(i).lat,indata(i).lon,clat,clon,rot_angle);
+			end
+		end
+	else
+		indata.x = indata.lon;
+		indata.y = indata.lat;
+	end
+	if (useutm)
+		% Set scene center lat/lon for use with UTM gridding
+		% Not necessary if local coordinate system specified)
+		clat = mean(cat(1,indata.lat));
+		clon = mean(cat(1,indata.lon));
+
+		% Make sure all datasets are referenced to the same UTM zone
+		for i=1:length(indata)
+			zone(i) = indata(i).utmzone(1); %SJZ
+		end
+		if (any(~strcmp(zone(1),zone)))%find mismatching
+		%   disp('UTM zone not consistent between datasets.  Please re-run mergeBathy with a non-zero reference position/rotation angle.');
+
+			%new code:
+			%Changed 10/24/14 to reproject each "errant" dataset
+			% into the "majority" zone.  Force the zones.  SJZ
+			zonestring = '';
+			refellip = 23;   % this number corresponds to WGS-84
+			for i=1:length(indata)
+				zonestring = strcat(zonestring,indata(i).utmzone(1));
+			end
+			zonestring = char(zonestring);
+			for i=1:length(indata)
+				agree(i) = length(findstr(zonestring,char(indata(i).utmzone(1))));
+			end
+			agreeindex = find(agree == max(agree));
+			agreeindex = agreeindex(1);
+			zone = indata(agreeindex).utmzone(1);
+			for i=1:length(indata)
+				if (~strcmp(zone,indata(i).utmzone(1)))
+					disp('reprojecting UTM coordinates into majority zone');
+					indata(i).utmzone = {zone};
+					[indata(i).y, indata(i).x, indata(i).utmzone] = ll2UTM(indata(i).lat, indata(i).lon, refellip, zone);
+				end
+			end
+		else
+		zone = zone(1);	
+		end
+	else
+		zone = '999';
+	end
+	x0 = floor(min(cat(1,indata.x)));
+	x1 = ceil(max(cat(1,indata.x)));
+	y0 = floor(min(cat(1,indata.y)));
+	y1 = ceil(max(cat(1,indata.y)));
+	% lat0 = min(cat(1,indata.lat));
+	% lat1 = max(cat(1,indata.lat));
+	% lon0 = min(cat(1,indata.lon));
+	% lon1 = max(cat(1,indata.lon));
+	if (~rect_ll)
+		%   Determine orientation (for mappish display later)
+		if (~local)
+			if (rot_angle <= 45 | rot_angle > 315)
+				flip = 0;
+				transpose = 0;
+			elseif (rot_angle > 45 & rot_angle <= 135)
+				flip = 1;
+				transpose = 1;
+			elseif (rot_angle > 135 & rot_angle <= 225)
+				flip = 1;
+				transpose = 0;
+			elseif (rot_angle > 225 & rot_angle <= 315)
+				flip = 0;
+				transpose = 1;
+			end
+		end
+	else
+	%         latscale = cos(pi*mean(cat(1,data.lat))/180.0);
+	%         llgdx = dx/(deg2km(latscale)*1000); % (111120.0*latscale);
+	%         llgdy = dy/(deg2km(1)*1000); % 111120.0;
+	%  		xt = lon0-llgdx:llgdx:lon1+llgdx; %wea
+	%         yt = lat0-llgdy:llgdy:lat1+llgdy;
+	%         [x,y] = meshgrid(xt,yt);
+		[i1,i2] = size(x);
+		x = reshape(x,i1*i2,1);
+		y = reshape(y,i1*i2,1);
+	%         [mx,my] = latlon2csas(y,x,clat,clon,rot_angle);
+		mx= x; my=y;
+		kbound = find(mx >= x0 & mx <= x1 & my >= y0 & my <= y1);
+		x = mx(kbound);
+		y = my(kbound);
+	end
+	
+	if plot_input
+		for cnt2 = 1:3
+			figure;
+			switch cnt2
+				case 1
+					plot(indata.x,indata.y,'.');
+					titstr = 'Input Soundings';
+				case 2
+					scatter3(indata.x,indata.y,-1*indata.z,'.');
+					titstr = 'Input Soundings [m]';
+					if cntM == 1
+						daspect([100 100 1]);
+					end
+				case 3
+					scatter3(indata.x,indata.y,indata.e,'.');
+					titstr = 'Input Uncertainties [m]';
+					if cntM == 1
+						daspect([10000 10000 1]);
+					end
+			end
+
+			axis tight
+			title([titstr],'FontSize',16);
+			set(gcf,'Name',titstr);
+			%zlabel('Depth (m)');
+			if (rect_ll)
+				xlabel('Longitude (deg)');
+				ylabel('Latitude (deg)');
+			else
+				if (useutm)
+					xlabel(sprintf('X (m) UTM [Zone %s]',char(zone)));
+					ylabel(sprintf('Y (m) UTM [Zone %s]',char(zone)));
+					ah = gca;
+					set(ah,'FontSize',8);
+					ticks = get(ah,'XTick');
+					for k=1:length(ticks);
+						newxtick(k,:) = {sprintf('%0.0f',ticks(k))};
+					end
+					set(ah,'XTickLabel',newxtick);
+					set(ah,'XTick',ticks);
+					ticks = get(ah,'YTick');
+					for k=1:length(ticks);
+						newytick(k,:) = {sprintf('%0.0f',ticks(k))};
+					end
+					set(ah,'YTickLabel',newytick);
+					set(ah,'YTick',ticks);
+				else
+					if (local | ~transpose)
+						xlabel('x (m)');
+						ylabel('y (m)');
+					else
+						ylabel('x (m)');
+						xlabel('y (m)');
+					end
+				end
+			end
+			hold off;
+
+			if (~local)
+				if (flip & ~transpose)
+					set(gca,'YDir','reverse');
+					set(gca,'XDir','reverse');
+				elseif (transpose & ~flip)
+					set(gca,'XDir','reverse');
+				elseif (flip & transpose)
+					set(gca,'YDir','reverse');
+				end
+			end
+			drawnow;
+			root = [[loc figDir] ];
+			if (saveplots)
+				graphoutname = strcat(root,[ext0 '_input' num2str(cnt2) '.jpg']);
+				saveas(gcf, graphoutname, 'jpg'); % used to be print(graphoutname,'-djpeg');
+				graphoutname = strcat(root,[ext0 '_input' num2str(cnt2) '.fig']);
+				hgsave(graphoutname);
+			end
+		end
+	end
+	if cntM == 1
+		indataTemp.A = indata;
+		insTemp = insB;
+		ext0 = 'dbdbv';
+		clear indata;
+	elseif cntM == 2
+		indataTemp.B = indata;
+	end
+end
+%%
+% Plot Outputs from MergeBathy C++
+[r,c] = size(fList);
+ for cnt = 1:r
+	 if cnt > 6
+		 indata = indataTemp.B;
+	 else
+		 indata = indataTemp.A;
+	 end
     cFile = fList(cnt,:);
 	fileID = fopen([loc cFile],'r');
-	if HEADER
+	if HEADER && (cnt ~= 5 && cnt ~= 7)
 		fgetl(fileID);
 	end
-	if ~MATLAB_FORMAT
-		sizeA = [6 Inf];
-		[A count] = fscanf(fileID,'%f %f %f %f %f %f\n',sizeA);
+	if cnt ~= 5 && cnt ~= 7 % SIT output
+		if ~MATLAB_FORMAT
+			sizeA = [6 Inf];
+			[A count] = fscanf(fileID,'%f %f %f %f %f %f\n',sizeA);
+		else
+			sizeA = [11 Inf];
+			[A count] = fscanf(fileID,'%f %f %f %f %f %f %f %f %f %f %f\n',sizeA);	
+		end
 	else
-		sizeA = [11 Inf];
-		[A count] = fscanf(fileID,'%f %f %f %f %f %f %f %f %f %f %f\n',sizeA);	
-	% 	[A count] = fscanf(fileID,'%f %f %f %*f %*f %*f %f %f %f %*f %*f\n',sizeA);	
+		sizeA = [4 Inf];
+		[A count] = fscanf(fileID,'%f %f %f %f\n',sizeA);
+		tempA = sortrows(A');
+		A = tempA';		
 	end
 	fclose(fileID);
 
@@ -115,19 +339,19 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 	ly = lys(cnt); %smoothing y
 	lx0 = lx;
 	ly0 = ly;
-	%
-	xt = linspace(min(A(1,:)),max(A(1,:)),dx);
-	yt = linspace(min(A(2,:)),max(A(2,:)),dy);
-	[x y] = meshgrid(xt,yt);
-	Zi = griddata(A(1,:),A(2,:),A(3,:),x,y);
-	Ei = griddata(A(1,:),A(2,:),A(4,:),x,y);
-	NEi = griddata(A(1,:),A(2,:),A(5,:),x,y);
-	REi = griddata(A(1,:),A(2,:),A(6,:),x,y);
-	if MATLAB_FORMAT
-		K_Z = griddata(A(1,:),A(2,:),A(10,:),x,y);
-		K_VAR = griddata(A(1,:),A(2,:),A(11,:),x,y);
+		
+	x = A(1,:);
+	y = A(2,:);
+	Zi = A(3,:);
+	Ei = A(4,:);
+	if cnt ~= 5 && cnt ~= 7
+		NEi = A(5,:);
+		REi = A(6,:);
+		if MATLAB_FORMAT
+			K_Z = A(10,:);
+			K_VAR = A(11,:);
+		end
 	end
-	gridlat=y; gridlon=x; 
 
 	data(1).x = x(:);
 	data(1).y = y(:);
@@ -137,33 +361,54 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 	%Comment this out to use in Lat Lon
 	%Comment in to convert to UTM and do the transposes and
 	%orientations
-	ref_lon = -75.749690; ref_lat = 36.177602; rotation_angle = 18.20;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
-	if ~LL
+	 if cnt < 5
+		 ref_lon = -75.749690; ref_lat = 36.177602; rotation_angle = 18.20;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
+	 elseif cntM >= 5
+		ref_lon = -129; ref_lat = 46.5; rotation_angle = 0;rot_angle=rotation_angle; clat=ref_lat;clon=ref_lon;
+	 end
+	% Determine whether or not to use UTM grid zones
+	if (clat == 0 & clon == 0 & rot_angle == 0 & ~rect_ll)
+		useutm = 1;
+	end
+	if LL
 		[data.x,data.y,data.utmzone] = latlon2csas(A(2,:),A(1,:),ref_lat,ref_lon,rotation_angle);
-		xt = linspace(min(data.x),max(data.x),dx);
-		yt = linspace(min(data.y),max(data.y),dy);
+		xt = round(min(data.x)):dx:max(data.x)+dx;
+		yt = round(min(data.y)):dy:max(data.y)+dy;
+		
 		[x y] = meshgrid(xt,yt);
-		Zi = griddata(data.x,data.y,A(3,:),x,y);
-		Ei = griddata(data.x,data.y,A(4,:),x,y);
-		NEi = griddata(data.x,data.y,A(5,:),x,y);
-		REi = griddata(data.x,data.y,A(6,:),x,y);
-		if MATLAB_FORMAT
-			K_Z = griddata(data.x,data.y,A(10,:),x,y);
-			K_VAR = griddata(data.x,data.y,A(11,:),x,y);
+		F = scatteredInterpolant(data.x',data.y',A(3,:)');
+		Zi = F(x,y);
+		F = scatteredInterpolant(data.x',data.y',A(4,:)');
+		Ei = F(x,y);
+		if cnt ~= 5 && cnt ~= 7
+			F = scatteredInterpolant(data.x',data.y',A(5,:)');
+			NEi = F(x,y);
+			F = scatteredInterpolant(data.x',data.y',A(6,:)');
+			REi = F(x,y);
+			if MATLAB_FORMAT
+				K_Z = scatteredInterpolant(data.x',data.y',A(10,:)');
+				K_Z = F(x,y);
+				K_VAR = scatteredInterpolant(data.x',data.y',A(11,:)');
+				K_VAR = F(x,y);
+			end
 		end
 		gridlat=y; gridlon=x; 
-	end
-	lons = cat(1,data.lon);
-	if(((min(lons) < 0 & max(lons) > 0) & (0-min(lons) > 180+min(lons))))
-		if(clon < 0)
-			clon = clon + 360;
+	
+		lons = cat(1,data.lon);
+		if(((min(lons) < 0 & max(lons) > 0) & (0-min(lons) > 180+min(lons))))
+			if(clon < 0)
+				clon = clon + 360;
+			end
+			for i = 1:length(data)
+				disp('Datasets straddle anti meridian.  Change lons to 0-360.');
+				id = find(data(i).lon < 0);
+				data(i).lon(id) = data(i).lon(id) + 360;
+				[data(i).x,data(i).y,data(i).utmzone] = latlon2csas(data(i).lat,data(i).lon,clat,clon,rot_angle);
+			end
 		end
-		for i = 1:length(data)
-			disp('Datasets straddle anti meridian.  Change lons to 0-360.');
-			id = find(data(i).lon < 0);
-			data(i).lon(id) = data(i).lon(id) + 360;
-			[data(i).x,data(i).y,data(i).utmzone] = latlon2csas(data(i).lat,data(i).lon,clat,clon,rot_angle);
-		end
+	else
+		xt = min(data.x):dx:max(data.x);
+		yt = min(data.y):dy:max(data.y);	
 	end
 	if (useutm)
 		% Set scene center lat/lon for use with UTM gridding
@@ -256,89 +501,91 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 	
 	%Generate Bathymetry Figures===========================================
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	if cnt ~= 5 && cnt ~= 7
+		nescale = median(NEi(~isnan(NEi))) + 0.1;
+		if (nescale > 0.95)
+			nescale = 0.95;
+		end
+		nescale = max(nescale,nethresh);  % removes edge extrapolation effects
 
-	nescale = median(NEi(~isnan(NEi))) + 0.1;
-	if (nescale > 0.95)
-		nescale = 0.95;
-	end
-	nescale = max(nescale,nethresh);  % removes edge extrapolation effects
+		if (min(min(NEi)) > nescale)
+			nescale = min(NEi(:)) + 0.1;
+		end
 
-	if (min(min(NEi)) > nescale)
-		nescale = min(NEi(:)) + 0.1;
-	end
+		% Changed 4/10/14 for NAVO Test
+		if (allownegativedepth) % not sure what Marc has going on here
+			ib = find(NEi > nescale); % really poor samples
+	% 		ib0 = find(NEi > nescale); 
+			ibK = find(NEi > nescale); 
+		else
+			ib = find(NEi > nescale | Zi < 0.1);
+	% 		ib0 = find(NEi > nescale | Zi0 < 0.1);
+			if MATLAB_FORMAT
+				ibK = find(NEi > nescale | K_Z < 0.1);%sam
+			end
+		end
 
-	% Changed 4/10/14 for NAVO Test
-	if (allownegativedepth) % not sure what Marc has going on here
-		ib = find(NEi > nescale); % really poor samples
-% 		ib0 = find(NEi > nescale); 
-		ibK = find(NEi > nescale); 
-	else
-		ib = find(NEi > nescale | Zi < 0.1);
-% 		ib0 = find(NEi > nescale | Zi0 < 0.1);
+		if modelflag % do not nan points below
+			ib = []; % nothing is bad
+	% 		ib0 = []; 
+			if MATLAB_FORMAT
+				ibK = []; 
+			end
+		else
+			disp(sprintf('Points with normalized errors greater than %f removed.',nescale));
+		end
+		% Comment out following if want to keep ALL interpolated points (including where you shouldn't)
+		Zi(ib) = Zi(ib)*nan; %WEA
+		Ei(ib) = Ei(ib)*nan; %SJZ
+		NEi(ib) = NEi(ib)*nan; %SJZ
+		REi(ib) = REi(ib)*nan; %SJZ
+	% 	Zi0(ib0) = Zi0(ib0)*nan;%SJZ
+	% 	STD_Zi(ib0) = STD_Zi(ib0)*nan;%SJZ
 		if MATLAB_FORMAT
-			ibK = find(NEi > nescale | K_Z < 0.1);%sam
+			K_Z(ibK) = K_Z(ibK)*nan;%SJZ
+			K_VAR(ibK) = K_VAR(ibK)*nan;%SJZ
 		end
-	end
+		% disp('nescale NOT being applied as filter');
 
-	if modelflag % do not nan points below
-		ib = []; % nothing is bad
-% 		ib0 = []; 
-		if MATLAB_FORMAT
-			ibK = []; 
+		if (~itersmooth)
+			if (length(lx) == 1 & length(ly) == 1)    % constant smoothing scales
+				lx = ones(size(Zi))*lx0;
+				ly = ones(size(Zi))*ly0;
+			else                                    % dynamic smoothing scales
+				lx = griddata(cat(1,data.x),cat(1,data.y),lx,x,y);
+				ly = griddata(cat(1,data.x),cat(1,data.y),ly,x,y);
+			end
 		end
-	else
-		disp(sprintf('Points with normalized errors greater than %f removed.',nescale));
+		ib = find(isnan(Zi));
+		lx(ib) = ones(size(ib))*nan;
+		ly(ib) = ones(size(ib))*nan;
 	end
-	% Comment out following if want to keep ALL interpolated points (including where you shouldn't)
-	Zi(ib) = Zi(ib)*nan; %WEA
-	Ei(ib) = Ei(ib)*nan; %SJZ
-	NEi(ib) = NEi(ib)*nan; %SJZ
-	REi(ib) = REi(ib)*nan; %SJZ
-% 	Zi0(ib0) = Zi0(ib0)*nan;%SJZ
-% 	STD_Zi(ib0) = STD_Zi(ib0)*nan;%SJZ
-	if MATLAB_FORMAT
-		K_Z(ibK) = K_Z(ibK)*nan;%SJZ
-		K_VAR(ibK) = K_VAR(ibK)*nan;%SJZ
-	end
-	% disp('nescale NOT being applied as filter');
-
-	if (~itersmooth)
-		if (length(lx) == 1 & length(ly) == 1)    % constant smoothing scales
-			lx = ones(size(Zi))*lx0;
-			ly = ones(size(Zi))*ly0;
-		else                                    % dynamic smoothing scales
-			lx = griddata(cat(1,data.x),cat(1,data.y),lx,x,y);
-			ly = griddata(cat(1,data.x),cat(1,data.y),ly,x,y);
-		end
-	end
-	ib = find(isnan(Zi));
-	lx(ib) = ones(size(ib))*nan;
-	ly(ib) = ones(size(ib))*nan;
-
 	if (rect_ll)	%%% reformat results into non-cropped array for display purposes
 		frame = ones(length(xt)*length(yt),1)*nan; %ngp comment out nan
 		frame(kbound) = Zi;
 		Zi = frame;
 		frame(kbound) = Ei;
 		Ei = frame;
-		frame(kbound) = NEi;
-		NEi = frame;
-		frame(kbound) = REi;
-		REi = frame;
-% 		frame(kbound) = Zi0;
-% 		Zi0 = frame;
-% 		frame(kbound) = STD_Zi;
-% 		STD_Zi = frame;
-		if MATLAB_FORMAT
-			frame(kbound) = K_Z;
-			K_Z = frame;
-			frame(kbound) = K_VAR;
-			K_VAR = frame;
+		if cnt ~= 5 && cnt ~= 7
+			frame(kbound) = NEi;
+			NEi = frame;
+			frame(kbound) = REi;
+			REi = frame;
+	% 		frame(kbound) = Zi0;
+	% 		Zi0 = frame;
+	% 		frame(kbound) = STD_Zi;
+	% 		STD_Zi = frame;
+			if MATLAB_FORMAT
+				frame(kbound) = K_Z;
+				K_Z = frame;
+				frame(kbound) = K_VAR;
+				K_VAR = frame;
+			end
+			frame(kbound) = lx;
+			lx = frame;
+			frame(kbound) = ly;
+			ly = frame;
 		end
-		frame(kbound) = lx;
-		lx = frame;
-		frame(kbound) = ly;
-		ly = frame;
 		x = mx;
 		y = my;
 	end
@@ -351,16 +598,18 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 		end
 		Zi = reshape(Zi,length(yt),length(xt));
 		Ei = reshape(Ei,length(yt),length(xt));
-		NEi = reshape(NEi,length(yt),length(xt));
-		REi = reshape(REi,length(yt),length(xt));
-% 		Zi0 = reshape(Zi0,length(yt),length(xt));
-% 		STD_Zi = reshape(STD_Zi,length(yt),length(xt));
-		if MATLAB_FORMAT
-			K_Z = reshape(K_Z,length(yt),length(xt));
-			K_VAR = reshape(K_VAR,length(yt),length(xt));
+		if cnt ~= 5 && cnt ~= 7
+			NEi = reshape(NEi,length(yt),length(xt));
+			REi = reshape(REi,length(yt),length(xt));
+	% 		Zi0 = reshape(Zi0,length(yt),length(xt));
+	% 		STD_Zi = reshape(STD_Zi,length(yt),length(xt));
+			if MATLAB_FORMAT
+				K_Z = reshape(K_Z,length(yt),length(xt));
+				K_VAR = reshape(K_VAR,length(yt),length(xt));
+			end
+			lx = reshape(lx,length(yt),length(xt));
+			ly = reshape(ly,length(yt),length(xt));
 		end
-		lx = reshape(lx,length(yt),length(xt));
-		ly = reshape(ly,length(yt),length(xt));
 		gridlat = reshape(gridlat,length(yt),length(xt));
 		gridlon = reshape(gridlon,length(yt),length(xt));
 % 		outx = reshape(x,length(yt),length(xt));
@@ -371,16 +620,18 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 		if (transpose)
 			Zi = Zi';
 			Ei = Ei';
-			NEi = NEi';
-			REi = REi';
-% 			Zi0 = Zi0';
-% 			STD_Zi = STD_Zi';
-			if MATLAB_FORMAT
-				K_Z = K_Z';
-				K_VAR = K_VAR';
+			if cnt ~= 5 && cnt ~= 7
+				NEi = NEi';
+				REi = REi';
+	% 			Zi0 = Zi0';
+	% 			STD_Zi = STD_Zi';
+				if MATLAB_FORMAT
+					K_Z = K_Z';
+					K_VAR = K_VAR';
+				end
+				lx = lx';
+				ly = ly';
 			end
-			lx = lx';
-			ly = ly';
 			%Added 4/10/14 for NAVO Test
 % 			outx = outx';
 % 			outy = outy';
@@ -394,18 +645,18 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 		end
 	end
 	
-	
-	
-	
-	
 	% Determine which graphics to display
 
 	root = [[loc figDir] figs(cnt,:)];
 	if (errplots)
-		toshow = 1:4;
-	%     toshow = 1:8;
-		if MATLAB_FORMAT
-			toshow = [toshow 7 8];
+		if cnt ~= 5 && cnt ~= 7
+			toshow = 1:2;
+		%     toshow = 1:8;
+			if MATLAB_FORMAT
+				toshow = [toshow 7 8];
+			end
+		else
+			toshow = 1:2;
 		end
 	else
 		toshow = 1;
@@ -428,20 +679,36 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 			figure
 			switch toshow(j)
 				case 1
-					E = Zi(:,:);
+					E = -1*Zi(:,:);
 					if (scale == 1)
-						titstr = 'Bathymetric surface [m]';
+						titstr = 'Bathymetric Surface [m]';
 					else
-						titstr = 'Bathymetric surface [ft]';
+						titstr = 'Bathymetric Surface [ft]';
 					end
-					colormap(flipud(jet)); % blue water, warm land
+					colormap((jet));
+% 					colormap(flipud(jet)); % blue water, warm land
 					graphextension = '';
 				case 2
+					E = Ei(:,:);
+					if cnt ~= 5 && cnt ~= 7
+						if (scale == 1)
+	% 						titstr = 'rms error estimate (Ei) (m)';
+							titstr = 'Uncertainty Estimate [m]';
+						else
+	% 						titstr = 'rms error estimate (Ei) (ft)';
+							titstr = 'Uncertainty Estimate (ft)';
+						end
+					else
+						titstr = 'Uncertainty Estimate [m]';
+					end
+					colormap((jet)); % hot errors
+					graphextension = '_rmserr';%'_rmsres'; %sam 
+				case 3
 					E = NEi(:,:);
 					titstr = 'normalized error estimate';
 					colormap((jet)); % hot errors
 					graphextension = '_normrms';
-				case 3
+				case 4
 					E = REi(:,:);
 					if (scale == 1)
 						titstr = 'residual error estimate (m)';
@@ -450,15 +717,6 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 					end
 					colormap((jet)); % hot errors
 					graphextension = '_rmsres';%'_rmserr';%sam
-				case 4
-					E = Ei(:,:);
-					if (scale == 1)
-						titstr = 'rms error estimate (Ei) (m)';
-					else
-						titstr = 'rms error estimate (Ei) (ft)';
-					end
-					colormap((jet)); % hot errors
-					graphextension = '_rmserr';%'_rmsres'; %sam 
 				case 5
 					% updated ZiTemp to reflect PropUncert depths in contours
 					ZiTemp = Zi0;
@@ -568,16 +826,25 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 			axis([min(xt) max(xt) min(yt) max(yt)]); % do this now before plotting points
 			axis('image');
 			axis xy;
-
+			
+			if toshow(j) == 2
+				if cnt < 6
+					caxis([0 0.1]);
+				elseif cnt > 7
+					caxis(cc3/5);
+				end
+				hold on; plot(indata.x,indata.y,'m.','markersize',1)
+			end
+			
 			if plotpts
 				if ~rect_ll
 					if (local | ~transpose)
-						plot(cat(1,data.x),cat(1,data.y), 'm.', 'markersize',1);
+						plot(cat(1,data.x),cat(1,data.y), 'm.', 'markersize',3);
 					else
-						plot(cat(1,data.y),cat(1,data.x), 'm.', 'markersize',1);
+						plot(cat(1,data.y),cat(1,data.x), 'm.', 'markersize',3);
 					end
 				else
-					plot(cat(1,data.lon),cat(1,data.lat), 'm.', 'markersize',1);
+					plot(cat(1,data.lon),cat(1,data.lat), 'm.', 'markersize',3);
 				end
 			end
 
@@ -636,138 +903,6 @@ fList= char('T10C01_CPP_DUCK_50x50g_50x50s.txt',...
 			end
 		end
 	end	% whether or not to display results
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	figure; surf(xs,ys,vs); colorbar; view(2); shading interp;
-    %set(gca, 'Clim', [-11000 -6000]);
-%   SaveFig( bathyTitles(cnt,:), [[loc figDir] bathyFigs(cnt,:)], 'Bathymetry');
-    LabelFig(bathyTitles(cnt,:),'Bathymetry');
-    SaveFig( [[loc figDir] bathyFigs(cnt,:)] );
-    FormatFig(cnt,1,[[loc figDir] bathyFigs(cnt,:)]);
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    %Generate Uncertainty Figures==========================================
-    B = geoDataArray([loc cFile], 4);
-    figure; surf(B, 1000, 1000, 'regrid'); 
-%    set(gca, 'Clim', [0 20]);
-%    figure; plot(B, 'ColorZ')
-    
-%     c = bboxcut(b, 13.1, 12.9, 146, 146.2)  
-% %    figure; plot(c)
-% %    figure; plot(c, 'colorz')
-% 
-%     figure; surf(c, 1000, 1000, 'regrid')
-%     figure; surf(geolimit(c, 10) , 1000, 1000, 'regrid')
-%  
-%     SaveFig( uncertTitles(cnt,:), [[loc figDir] uncertFigs(cnt,:)], 'Uncertainty');
-    LabelFig(uncertTitles(cnt,:),'Uncertainty');
-    SaveFig( [[loc figDir] uncertFigs(cnt,:)] );
-    FormatFig(cnt,2,[[loc figDir] uncertFigs(cnt,:)]);
-    
-    if(cnt==3) 
-        D1=B;
-    elseif(cnt==4)
-        D3=B;
-    elseif(cnt==9)
-        D2=B;
-    elseif(cnt==10)
-        D4=B;
-    end
  end
  
-  % Print DBDBV uncertainty differences when kriging
-  D = D2 - D1; %DBDBV_Uncertainty - DBDBV_Uncertainty_Krig
-  figure; surf(D, 1000, 1000, 'regrid'); 
-%   SaveFig( 'DBDBV Kriging Uncertainty Differences', [[loc figDir] 'DBDBV_Kriging_Uncert_Diffs'], 'Uncertainty');
-  LabelFig('DBDBV Kriging Uncertainty Differences','Uncertainty');
-  SaveFig( [[loc figDir] 'DBDBV_Kriging_Uncert_Diffs'] );
-  FormatFig(cnt+1,2,[[loc figDir] 'DBDBV_Kriging_Uncert_Diffs']);
-
-  
-  D = D4 - D3; %DBDBV_Uncertainty_NoOverlap - DBDBV_Uncertainty_Krig_NoOverlap
-  figure; surf(D, 1000, 1000, 'regrid'); 
-  LabelFig('DBDBV Kriging Uncertainty No Overlap Differences','Uncertainty');
-  SaveFig( [[loc figDir] 'DBDBV_Kriging_Uncert_NoOverlap_Diffs'] );
-  FormatFig(cnt+1,2,[[loc figDir] 'DBDBV_Kriging_Uncert_NoOverlap_Diffs']);
-
-  
-end
-
- function LabelFig(figTitle, yLabel)
  
-  % Figure Formating
-    xlabel('Longitude', 'FontSize', 14)
-    ylabel('Latitude', 'FontSize', 14)
-    set(gca, 'FontSize', 14)
-    title(figTitle, 'FontSize', 14)
-    h = colorbar;
-    set(h, 'FontSize', 14)
-    set(get(h, 'YLabel'), 'String', strcat(yLabel,' (m)'), 'FontSize', 14)
- end
- 
- function SaveFig(figFile)
-
-    cFigFile = figFile;
-    cnt2=1;
-    while (exist(strcat(cFigFile,'.jpg'),'file')~=0)
-        cnt2= cnt2 + 1;
-        cFigFile= strcat(figFile,'_', int2str(cnt2));
-    end
-    print('-djpeg', '-r300', strtrim(cFigFile));
-    hgsave(strtrim(cFigFile));
- end
- 
- function FormatFig(cnt,fflag,figFile)
-    if((cnt==1 || cnt==2) || (cnt==7 || cnt==8)) %NCEX
-        hold on;
-        axis image;
-        if fflag==1
-            caxis([-700,0]);
-        else 
-            caxis([-50,50]);
-        end
-        hold off;
-        SaveFig( strcat(figFile, '_Formatted'));
-    elseif((cnt==3 || cnt==4) || (cnt==9 || cnt==10) || cnt==13)%DBDBV
-        hold on;
-        axis image;
-        if fflag==1
-            caxis([-3000,0]);
-        else
-            caxis([-50,50]);
-        end
-        hold off;
-        SaveFig( strcat(figFile, '_Formatted'));
-    end
- end

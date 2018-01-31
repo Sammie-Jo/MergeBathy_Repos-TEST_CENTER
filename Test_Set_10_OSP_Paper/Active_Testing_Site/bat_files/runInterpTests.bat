@@ -102,7 +102,7 @@ set configErrFlag=1
 	:: Set Path variable
 	set path= %path%;%MERGEBATHY_DLLS%
 	::=====================================================================
-	::This is an example input file for demonstrating the capabilites of mergeBathy
+	::This is an example input file for demonstrating the capabilities of mergeBathy
 	::! 36.177602 -75.749690 18.20 DuckNC mgrid 50 msmooth 50 nooffset plotpts modelflag nonegdepth
 
 	echo TEST CASE 1: Duck, NC 50 x 50 meter grid with 50 x 50 meter Hann smoothing window
