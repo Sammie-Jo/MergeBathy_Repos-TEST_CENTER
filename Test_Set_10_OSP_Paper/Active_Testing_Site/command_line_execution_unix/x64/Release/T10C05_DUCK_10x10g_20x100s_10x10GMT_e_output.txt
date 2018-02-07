@@ -39,7 +39,7 @@ Dimensions of Computational Area:
 	Number of computed columns: 38
 Time to Complete GMT Surface Interpolation: 0 seconds.
 
-Time to Complete GMT Surface Interpolation with Errors: 0.02
+Time to Complete GMT Surface Interpolation with Errors: 0.03
 
 Done Computing GMT Surface
 

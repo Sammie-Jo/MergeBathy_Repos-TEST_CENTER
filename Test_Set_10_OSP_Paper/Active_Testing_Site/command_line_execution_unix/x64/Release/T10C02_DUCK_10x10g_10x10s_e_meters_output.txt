@@ -35,15 +35,15 @@ Number of computed tiles = 36, expected efficiency = 0.042626
 
 
 ENTERING INTERPOLATION ROUTINE:
-Interpolated 23833 points per second (tiled).
+Interpolated 53625 points per second (tiled).
 Store Output
 DONE SCALECINTERPTILEDATA
 
 Interpolation Complete!
-Time to Complete Interpolation: 0.09 seconds
+Time to Complete Interpolation: 0.04 seconds
 
 Nothing is bad!
 Writing Output Data to: ../output_files/T10C02_CPP_DUCK_10x10g_10x10s_e_meters.txt
 Done Creating Output File
 
-Total Computation Time: 0.13 seconds
+Total Computation Time: 0.05 seconds
