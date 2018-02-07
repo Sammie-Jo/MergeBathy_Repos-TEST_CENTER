@@ -126,18 +126,21 @@ while true; do
 	$testDir/mergeBathy ../output_files/T10C04_CPP_DUCK_10x10g_20x100s_e_meters 10 hann ../../../Test_Set_10_OSP_Paper/Active_Testing_Site/input_file_lists/input_file_list_duckExample_e_meters.txt -75.749690 36.177602 18.20 -1 -nmsei -msri -multiThread 8 -mse 1 -msmooth 20 100 -modelflag -nonegdepth -inputInMeters > ../command_line_execution/T10C04_DUCK_10x10g_20x100s_e_meters_output.txt
 	echo "done." 
 	echo ""
-	
+
+	#Will break for x86 too large
 	echo "TEST CASE 5: Duck, NC 10 x 10 meter grid with 20 x 100 meter Hann smoothing window and 10 x 10 meter pre-splining SIT ..."
 	$testDir/mergeBathy ../output_files/T10C05_CPP_DUCK_10x10g_20x100s_10x10GMT_e_meters 10 hann ../../../Test_Set_10_OSP_Paper/Active_Testing_Site/input_file_lists/input_file_list_duckExample_e_meters.txt -75.749690 36.177602 18.20 -1 -nmsei -msri -multiThread 8 -mse 1 -msmooth 20 100 -modelflag -nonegdepth -GMTSurface 10 10 ../output_files/T10C05_CPP_DUCK_10x10g_20x100s_10x10GMT_e_meters_xyze 0.1 1.96 2 -2 -inputInMeters > ../command_line_execution/T10C05_DUCK_10x10g_20x100s_10x10GMT_e_meters_output.txt
 	echo "done." 
 	echo ""
-
+	
+	#Will break for x86 too large
 	echo "TEST CASE 6: DBDBV 926 x 926 meter grid with 1234.67 x 1234.67 meter Hann smoothing window and pre-splined with 617.33 x 617.33 meter zgrid MB-System modelflag, NOnonegdepth..."
 	#j mgrid 926 smooth 1234.67 mbz 617.33
 	$testDir/mergeBathy ../output_files/T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ_e_meters 926 hann ../../../Test_Set_10_OSP_Paper/Active_Testing_Site/input_file_lists/DBDBV_test_input_file_list_NoOverlap_e_meters.txt -129 49.5 0 -1 -nmsei -msri -multiThread 8 -mse 1 -modelflag -msmooth 1234.67 1234.67 -ZGrid 617.33 617.33 ../output_files/T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ_e_meters_xyde 0.1 -2 -inputInMeters > ../command_line_execution/T10C06_DBDBV_MBZ_e_meters_output.txt
 	echo "done." 
 	echo ""
-
+	
+	#Will break for x86 too large
 	echo "TEST CASE 7: DBDBV 926 x 926 meter grid with 1234.67 x 1234.67 meter Hann smoothing window and pre-splined with 617.33 x 617.33 meter zgrid MB-System modelflag, NOnonegdepth with kriging..."
 	#j mgrid 926 smooth 1234.67 mbz 617.33
 	$testDir/mergeBathy ../output_files/T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK_e_meters 926 hann ../../../Test_Set_10_OSP_Paper/Active_Testing_Site/input_file_lists/DBDBV_test_input_file_list_NoOverlap_e_meters.txt -129 49.5 0 -1 -nmsei -msri -multiThread 8 -mse 1 -modelflag -msmooth 1234.67 1234.67 -ZGrid 617.33 617.33 ../output_files/T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ_e_meters_xyde 0.1 -2 -kriging -inputInMeters > ../command_line_execution/T10C07_DBDBV_MBZK_e_meters_output.txt
@@ -168,7 +171,7 @@ while true; do
 
 	echo $(cls)
 	echo
-	echo "runValidationData_ALL.sh done."
+	echo "runInterps_e_meters.sh done."
 	break
 done
 
