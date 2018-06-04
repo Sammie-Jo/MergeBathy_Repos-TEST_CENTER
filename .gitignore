@@ -1,4 +1,6 @@
 *.gitignore
+*.asv
+/Test_Set_10_OSP_Paper/Active_Testing_Site/createBathyCppFigs_v*.m
 
 .hg*
 !Test_Set_10_OSP_Paper/*

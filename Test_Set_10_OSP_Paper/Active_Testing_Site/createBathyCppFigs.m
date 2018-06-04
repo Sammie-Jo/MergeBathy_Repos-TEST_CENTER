@@ -1,7 +1,24 @@
 %Create Figs
 % function createBathyCppFigs 
-clear;
+
+% OSP FIGS:
+% Fig 2 a: Duck Input Soundings (duck_input2.jpg)
+% Fig 2 b: Duck Bathymetric Surface 50x50 m (T10C01_Duck_50x50g_50x50s_e_meters_bathy_hann.jpg)
+% Fig 2 c: Duck Bathymetric Surface 10x10 m (T10C02_Duck_10x10g_10x10s_e_meters_bathy_hann.jpg)
+% Fig 3 a: Duck Bathymetric Surface 10x10 m w Smoothing 20x20 m
+% Fig 3 b: Duck Bathymetric Surface 10x10 m w Smoothing 20x100 m
+% Fig 4 a: Duck Bathymetric Surface 10x10m from GMT xyde (T10C05_Duck_10x10g_20x100s_10x10GMT_e_meters_xyze_bathy_hann.jpg)
+% Fig 4 b: Duck Undertainty Estimate 10x10m from GMT xyde (T10C05_Duck_10x10g_20x100s_10x10GMT_e_meters_xyze_bathy_hann_rmserr.jpg)
+
+% Will need to open Fig2a, rotate to position, and reprint to save at dpi 300
+% aa2 = axis
+% select fig2b
+% aa = axis
+% axis([aa,aa2(end-1:end)])
+% print(gcf, [loc figDir 'duck_input2_FIG2a.jpg'], '-djpeg', '-r300');
 %%
+clear;
+
 % data.utmzone = {'999'};
 transpose = 0;
 HEADER = 1;
@@ -75,6 +92,14 @@ fList= char(['T10C01_CPP_DUCK_50x50g_50x50s' ext '.txt'],...
 	['T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ' ext '_xyde'],...
 	['T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ' ext],...
 	['T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK' ext]);
+
+figsext = char('_FIG2b',...
+				'_FIG2c',...
+				'_FIG3a',...
+				'_FIG3b',...
+				'_FIG4',...
+				'',...
+				'','','');
 %%
 inA = [];
 if LL
@@ -219,19 +244,21 @@ for cntM=1:2
 	if plot_input
 		for cnt2 = 1:3
 			figure;
+			ext2 = '';
 			switch cnt2
 				case 1
 					plot(indata.x,indata.y,'.');
 					titstr = 'Input Soundings';
 				case 2
 					scatter3(indata.x,indata.y,-1*indata.z,'.');
-					titstr = 'Input Soundings [m]';
+					titstr = 'Input Soundings (m)';
 					if cntM == 1
 						daspect([100 100 1]);
+						ext2 = '_FIG2a';
 					end
 				case 3
 					scatter3(indata.x,indata.y,indata.e,'.');
-					titstr = 'Input Uncertainties [m]';
+					titstr = 'Input Uncertainties (m)';
 					if cntM == 1
 						daspect([10000 10000 1]);
 					end
@@ -287,10 +314,9 @@ for cntM=1:2
 			drawnow;
 			root = [[loc figDir] ];
 			if (saveplots)
-				graphoutname = strcat(root,[ext0 '_input' num2str(cnt2) '.jpg']);
-				saveas(gcf, graphoutname, 'jpg'); % used to be print(graphoutname,'-djpeg');
-				graphoutname = strcat(root,[ext0 '_input' num2str(cnt2) '.fig']);
-				hgsave(graphoutname);
+				graphoutname = strcat(root,[ext0 '_input' num2str(cnt2),ext2]);
+				print(gcf, [graphoutname, '.jpg'], '-djpeg', '-r300'); %changed for OSP Resolution
+				hgsave([graphoutname,'.fig']);
 			end
 		end
 	end
@@ -677,32 +703,41 @@ end
 			maxZ = ceil(max(max(Zi)));
 			% select the error field to show
 			figure
+			ext2 = '';
 			switch toshow(j)
 				case 1
 					E = -1*Zi(:,:);
 					if (scale == 1)
-						titstr = 'Bathymetric Surface [m]';
+						titstr = 'Bathymetric Surface (m)';
 					else
-						titstr = 'Bathymetric Surface [ft]';
+						titstr = 'Bathymetric Surface (ft)';
 					end
 					colormap((jet));
 % 					colormap(flipud(jet)); % blue water, warm land
 					graphextension = '';
+					if cnt <= 4
+						ext2 = figsext(cnt,:);
+					elseif cnt ==5
+						ext2 = strcat(figsext(cnt,:), 'a');
+					end
 				case 2
 					E = Ei(:,:);
 					if cnt ~= 5 && cnt ~= 7
 						if (scale == 1)
 	% 						titstr = 'rms error estimate (Ei) (m)';
-							titstr = 'Uncertainty Estimate [m]';
+							titstr = 'Uncertainty Estimate (m)';
 						else
 	% 						titstr = 'rms error estimate (Ei) (ft)';
 							titstr = 'Uncertainty Estimate (ft)';
 						end
 					else
-						titstr = 'Uncertainty Estimate [m]';
+						titstr = 'Uncertainty Estimate (m)';
 					end
 					colormap((jet)); % hot errors
 					graphextension = '_rmserr';%'_rmsres'; %sam 
+					if cnt == 5
+						ext2 = strcat(figsext(cnt,:), 'b');
+					end
 				case 3
 					E = NEi(:,:);
 					titstr = 'normalized error estimate';
@@ -723,9 +758,9 @@ end
 					maxZ = ceil(max(max(Zi0)));
 					E = Zi0(:,:);
 					if (scale == 1)
-						titstr = 'PropUncert Bathymetric surface [m]';
+						titstr = 'PropUncert Bathymetric surface (m)';
 					else
-						titstr = 'PropUncert Bathymetric surface [ft]';
+						titstr = 'PropUncert Bathymetric surface (ft)';
 					end
 					colormap(flipud(jet)); % blue water, warm land
 					graphextension = '_zi0';
@@ -747,9 +782,9 @@ end
 					maxZ = ceil(max(max(K_Z)));
 					E = K_Z(:,:);
 					if (scale == 1)
-						titstr = 'Kalman Bathymetric surface [m]';
+						titstr = 'Kalman Bathymetric surface (m)';
 					else
-						titstr = 'Kalman Bathymetric surface [ft]';
+						titstr = 'Kalman Bathymetric surface (ft)';
 					end
 					colormap(flipud(jet)); % blue water, warm land
 					graphextension = '_kz';
@@ -826,12 +861,12 @@ end
 			axis([min(xt) max(xt) min(yt) max(yt)]); % do this now before plotting points
 			axis('image');
 			axis xy;
-			
+			c_old = caxis;
 			if toshow(j) == 2
 				if cnt < 6
 					caxis([0 0.1]);
 				elseif cnt > 7
-					caxis(cc3/5);
+					caxis(c_old./5);
 				end
 				hold on; plot(indata.x,indata.y,'m.','markersize',1)
 			end
@@ -894,12 +929,10 @@ end
 				end
 			end
 			drawnow;
-
 			if (saveplots)
-			graphoutname = strcat(root,'_bathy_',filtername,graphextension,'.jpg');
-			saveas(gcf, graphoutname, 'jpg'); % used to be print(graphoutname,'-djpeg');
-			graphoutname = strcat(root,'_bathy_',filtername,graphextension,'.fig');
-			hgsave(graphoutname);
+				graphoutname = strcat(root,'_bathy_',filtername,graphextension, ext2);
+				print(gcf, [graphoutname '.jpg'], '-djpeg', '-r300'); % changed for OSP Resolution
+				hgsave([graphoutname,'.fig']);
 			end
 		end
 	end	% whether or not to display results

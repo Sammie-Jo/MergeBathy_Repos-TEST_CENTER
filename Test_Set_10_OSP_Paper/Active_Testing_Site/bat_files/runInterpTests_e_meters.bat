@@ -134,7 +134,7 @@ set configErrFlag=1
 	echo ...done.
 	echo.
 	echo.echo TEST CASE 7: DBDBV 926 x 926 meter grid with 1234.67 x 1234.67 meter Hann smoothing window and pre-splined with 617.33 x 617.33 meter zgrid MB-System modelflag, NOnonegdepth with kriging
-	%testDir%\mergeBathy.exe ..\output_files\T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK_e_meters 926 hann ..\..\..\Test_Set_10_OSP_Paper\Active_Testing_Site\input_file_lists\DBDBV_test_input_file_list_NoOverlap_e_meters.txt -129 49.5 0 -1 -nmsei -msri -multiThread 8 -mse 1 -modelflag -msmooth 1234.67 1234.67 -ZGrid 617.33 617.33 ..\output_files\T10C07_CPP_DBDBV_0.5_NoOverlap_MBZ_e_meters_xyde 0.1 -2 -kriging -inputInMeters > ..\command_line_execution\T10C07_DBDBV_MBZK_output_e_meters.txt
+	%testDir%\mergeBathy.exe ..\output_files\T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK_e_meters 926 hann ..\..\..\Test_Set_10_OSP_Paper\Active_Testing_Site\input_file_lists\DBDBV_test_input_file_list_NoOverlap_e_meters.txt -129 49.5 0 -1 -nmsei -msri -multiThread 8 -mse 1 -modelflag -msmooth 1234.67 1234.67 -ZGrid 617.33 617.33 ..\output_files\T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ_e_meters_xyde 0.1 -2 -kriging -inputInMeters > ..\command_line_execution\T10C07_DBDBV_MBZK_output_e_meters.txt
 	echo ...done.
 	echo.
 
