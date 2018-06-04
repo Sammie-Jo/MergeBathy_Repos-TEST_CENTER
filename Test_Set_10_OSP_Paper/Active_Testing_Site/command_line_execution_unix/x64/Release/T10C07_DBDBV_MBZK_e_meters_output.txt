@@ -44,11 +44,11 @@ Dimensions of Computational Area:
 
 Number of computed rows: 544
 Number of computed cols: 484
-Time to Complete MB_ZGrid Interpolation: 0.05
+Time to Complete MB_ZGrid Interpolation: 0.07
 
 MB_Zgrid output in (x, y) meters; no UTM conversions will be calculated.
 
-Time to Complete MB_ZGrid Interpolation with Errors: 5.43
+Time to Complete MB_ZGrid Interpolation with Errors: 6.14
 
 Done Computing MB_ZGrid
 
@@ -59,15 +59,15 @@ Number of computed tiles = 324, expected efficiency = 0.005795
 
 
 ENTERING INTERPOLATION ROUTINE:
-Interpolated 2926 points per second (tiled).
+Interpolated 3276 points per second (tiled).
 Store Output
 DONE SCALECINTERPTILEDATA
 
 Interpolation Complete!
-Time to Complete Interpolation: 40.53 seconds
+Time to Complete Interpolation: 36.2 seconds
 
 Nothing is bad!
 Writing Output Data to: ../output_files/T10C07_CPP_DBDBV_0.5_NoOverlap_MBZK_e_meters.txt
 Done Creating Output File
 
-Total Computation Time: 53.94 seconds
+Total Computation Time: 50.07 seconds

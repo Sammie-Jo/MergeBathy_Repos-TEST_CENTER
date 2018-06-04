@@ -44,11 +44,11 @@ Dimensions of Computational Area:
 
 Number of computed rows: 544
 Number of computed cols: 484
-Time to Complete MB_ZGrid Interpolation: 0.11
+Time to Complete MB_ZGrid Interpolation: 0.09
 
 MB_Zgrid output in (x, y) meters; no UTM conversions will be calculated.
 
-Time to Complete MB_ZGrid Interpolation with Errors: 22.17
+Time to Complete MB_ZGrid Interpolation with Errors: 21.79
 
 Done Computing MB_ZGrid
 

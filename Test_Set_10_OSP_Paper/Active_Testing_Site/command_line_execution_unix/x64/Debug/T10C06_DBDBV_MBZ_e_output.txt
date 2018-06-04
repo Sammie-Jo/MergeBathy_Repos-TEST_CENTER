@@ -38,7 +38,7 @@ Number of computed rows: 544
 Number of computed cols: 484
 Time to Complete MB_ZGrid Interpolation: 0.06
 
-Time to Complete MB_ZGrid Interpolation with Errors: 8.53
+Time to Complete MB_ZGrid Interpolation with Errors: 9.2
 
 Done Computing MB_ZGrid
 
@@ -49,15 +49,15 @@ Number of computed tiles = 324, expected efficiency = 0.005795
 
 
 ENTERING INTERPOLATION ROUTINE:
-Interpolated 5997 points per second (tiled).
+Interpolated 6391 points per second (tiled).
 Store Output
 DONE SCALECINTERPTILEDATA
 
 Interpolation Complete!
-Time to Complete Interpolation: 19.78 seconds
+Time to Complete Interpolation: 18.56 seconds
 
 Nothing is bad!
 Writing Output Data to: ../output_files/T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ_e.txt
 Done Creating Output File
 
-Total Computation Time: 38.13 seconds
+Total Computation Time: 37.74 seconds

@@ -46,4 +46,4 @@ Nothing is bad!
 Writing Output Data to: ../output_files/T10C01_CPP_DUCK_50x50g_50x50s_e.txt
 Done Creating Output File
 
-Total Computation Time: 0.02 seconds
+Total Computation Time: 0.01 seconds

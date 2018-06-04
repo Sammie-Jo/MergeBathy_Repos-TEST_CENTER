@@ -38,7 +38,7 @@ Number of computed rows: 544
 Number of computed cols: 484
 Time to Complete MB_ZGrid Interpolation: 0.1
 
-Time to Complete MB_ZGrid Interpolation with Errors: 21.59
+Time to Complete MB_ZGrid Interpolation with Errors: 20.27
 
 Done Computing MB_ZGrid
 

@@ -40,7 +40,7 @@ Time to Complete MB_ZGrid Interpolation: 0.04
 
 MB_Zgrid output in (x, y) meters; no UTM conversions will be calculated.
 
-Time to Complete MB_ZGrid Interpolation with Errors: 5.26
+Time to Complete MB_ZGrid Interpolation with Errors: 6.06
 
 Done Computing MB_ZGrid
 
@@ -51,15 +51,15 @@ Number of computed tiles = 324, expected efficiency = 0.005795
 
 
 ENTERING INTERPOLATION ROUTINE:
-Interpolated 11745 points per second (tiled).
+Interpolated 13151 points per second (tiled).
 Store Output
 DONE SCALECINTERPTILEDATA
 
 Interpolation Complete!
-Time to Complete Interpolation: 10.1 seconds
+Time to Complete Interpolation: 9.02 seconds
 
 Nothing is bad!
 Writing Output Data to: ../output_files/T10C06_CPP_DBDBV_0.5_NoOverlap_MBZ_e_meters.txt
 Done Creating Output File
 
-Total Computation Time: 23.5 seconds
+Total Computation Time: 23.18 seconds

@@ -37,11 +37,11 @@ Dimensions of Computational Area:
 
 	Number of computed rows: 54
 	Number of computed columns: 38
-Time to Complete GMT Surface Interpolation: 0.01 seconds.
+Time to Complete GMT Surface Interpolation: 0.02 seconds.
 
 GMT_Surface output in (x, y) meters; no UTM conversions will be calculated.
 
-Time to Complete GMT Surface Interpolation with Errors: 0.17
+Time to Complete GMT Surface Interpolation with Errors: 0.16
 
 Done Computing GMT Surface
 
@@ -52,15 +52,15 @@ Number of computed tiles = 49, expected efficiency = 0.039666
 
 
 ENTERING INTERPOLATION ROUTINE:
-Interpolated 5500 points per second (tiled).
+Interpolated 5797 points per second (tiled).
 Store Output
 DONE SCALECINTERPTILEDATA
 
 Interpolation Complete!
-Time to Complete Interpolation: 0.39 seconds
+Time to Complete Interpolation: 0.37 seconds
 
 Nothing is bad!
 Writing Output Data to: ../output_files/T10C05_CPP_DUCK_10x10g_20x100s_10x10GMT_e_meters.txt
 Done Creating Output File
 
-Total Computation Time: 1.99 seconds
+Total Computation Time: 1.88 seconds
